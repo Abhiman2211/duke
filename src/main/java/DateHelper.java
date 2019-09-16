@@ -35,11 +35,13 @@ public class DateHelper {
      */
     public static String parseDate(String dateDetail) throws InvalidDukeDateException {
         String[] dateBreakup = dateDetail.split("/");
+        validateDateInput(dateBreakup);
         String month = getMonth(dateBreakup[1]);    
         int lastDigitOfDay = Integer.parseInt(dateBreakup[0]) % 10;
-        String dayEnding = lastDigitOfDay == 1 ? "st" : lastDigitOfDay == 2 ? "nd" 
-                : lastDigitOfDay == 3 ? "rd" : "th";
-        return dateBreakup[0] + dayEnding + " of " + month + " " + dateBreakup[2]; 
+        int firstDigitOfDay = Integer.parseInt(dateBreakup[0]) / 10;
+        String dayEnding = firstDigitOfDay == 1 ? "th" : lastDigitOfDay == 1 
+                ? "st" : lastDigitOfDay == 2 ? "nd" : lastDigitOfDay == 3 ? "rd" : "th";
+        return dateBreakup[0] + dayEnding + " of " + month + ", " + dateBreakup[2]; 
     }
 
     private static String getMonth(String month) throws InvalidDukeDateException {
@@ -51,7 +53,7 @@ public class DateHelper {
     }
 
     private static void validateHour(int hour) throws InvalidDukeDateException {
-        if (hour > 24 || hour < 1) {
+        if (hour >= 24 || hour < 0) {
             throw new InvalidDukeDateException("OOPS!!! The time you inputted is not valid.");
         }
     }
@@ -59,6 +61,12 @@ public class DateHelper {
     private static void validateMinute(int minute) throws InvalidDukeDateException {
         if (minute > 59 || minute < 0) {
             throw new InvalidDukeDateException("OOPS!!! The time you inputted is not valid.");
+        }
+    }
+
+    private static void validateDateInput(String[] date) throws InvalidDukeDateException {
+        if (date.length != 3) {
+            throw new InvalidDukeDateException("OOPS!!! The date you inputted is not of valid format.");
         }
     }
 

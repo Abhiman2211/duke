@@ -34,7 +34,7 @@ public class AddCommandValidator {
      * 
      * @param detail The details as inputted by the user but split into an array based on whitespaces. 
      * @throws InvalidDeadlineSyntaxException If the deadline details as inputted 
-     * by the user are insufficient or of incorrect format.
+     *     by the user are insufficient or of incorrect format.
      */
     public void validateDeadlineDetails(String[] detail) throws InvalidDeadlineSyntaxException {
         if (detail.length != 2) {
